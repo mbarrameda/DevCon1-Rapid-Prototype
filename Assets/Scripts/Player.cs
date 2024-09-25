@@ -17,9 +17,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Horizontal movement using A and D keys
-        float moveInput = Input.GetAxisRaw("Horizontal"); // -1 for A, 1 for D
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        // Check gravity direction and apply movement accordingly
+        if (gravityDirection == Vector2.left || gravityDirection == Vector2.right)
+        {
+            // Vertical movement when gravity is left or right (W/S or Up/Down keys)
+            float moveInput = Input.GetAxisRaw("Vertical"); // -1 for S/DownArrow, 1 for W/UpArrow
+            rb.velocity = new Vector2(rb.velocity.x, moveInput * moveSpeed);
+        }
+        else
+        {
+            // Horizontal movement when gravity is up or down (A/D keys)
+            float moveInput = Input.GetAxisRaw("Horizontal"); // -1 for A, 1 for D
+            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        }
 
         // Change gravity direction with arrow keys
         if (Input.GetKeyDown(KeyCode.UpArrow))
