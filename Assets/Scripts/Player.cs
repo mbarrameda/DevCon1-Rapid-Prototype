@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Add this for scene management
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -51,5 +52,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply the new gravity direction
         Physics2D.gravity = gravityDirection * gravityStrength;
+    }
+
+    // Detect collision with "Trap" object
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Trap")) // Check if collided object has the "Trap" tag
+        {
+            ResetScene(); // Call the scene reset function
+        }
+    }
+
+    // Reset the scene
+    void ResetScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload current scene
     }
 }
